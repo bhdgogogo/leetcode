@@ -1,0 +1,39 @@
+﻿/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var trap = function(height) {
+    // 两个dp存储状态
+    // lHeight[i]表示下标i左边的最大高度
+    // rHeight[i]表示下标i右边的最大高度
+
+    let lHeight = new Array(height.length).fill(-1);
+    let rHeight = new Array(height.length).fill(-1);
+
+    console.log(lHeight);
+
+    // 从左往右遍历 —— 得到每个位置左边的最大高度
+    lHeight[0] = height[0];
+    for(let i = 1; i < height.length; i ++){
+      lHeight[i] = Math.max(lHeight[i - 1], height[i]);
+    }
+    console.log(lHeight);
+    rHeight[height.length - 1] = height[height.length - 1];
+    // 从右往前遍历 —— 得到每个位置右边的最大高度
+    for(let i = height.length - 2; i >= 1; i --){
+      rHeight[i] = Math.max(rHeight[i + 1], height[i]);
+    }
+    console.log(rHeight);
+    let res = 0;
+    // 从前往后遍历开始统计结果
+    // 第1个位置（i = 0）不接雨水
+    // 最后1个位置 (i = length - 1)不接雨水
+    for(let i = 1; i < height.length - 1; i ++){
+      let h = Math.min(lHeight[i], rHeight[i]);
+      let area = h - height[i];
+      console.log(area);
+      res += area;
+    }
+
+    return res;
+};

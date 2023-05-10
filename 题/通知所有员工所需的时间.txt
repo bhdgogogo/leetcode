@@ -1,0 +1,38 @@
+﻿/**
+ * @param {number} n
+ * @param {number} headID
+ * @param {number[]} manager
+ * @param {number[]} informTime
+ * @return {number}
+ */
+var numOfMinutes = function(n, headID, manager, informTime) {
+    // informTime[i] == 0 表示该结点是结束位置
+    // 我们把树分为遍历子树路径问题 —— 到叶子结点的路径 —— 取最大值
+
+    if(manager.length == 1){
+        return informTime[0];
+    }
+    let res = 0;
+    // 遍历整棵树
+    for(let i = 0; i < manager.length; i ++){
+        // 找叶子结点
+        if(informTime[i] == 0){
+            // 记录当前子树的花费
+            let curCost = 0;
+            // 记录当前的结点下标
+            let curIndex = i;
+            // 从下往上找
+            while(curIndex != -1){
+                curCost = curCost + informTime[curIndex];
+                curIndex = manager[curIndex];
+            }
+            
+            // 到叶子结点的路径有很多 —— 取最大值
+            // 取最大值可以保证在这个
+            res = Math.max(res, curCost);
+        }
+
+    }
+    return res;
+
+};
